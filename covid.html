@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>covif</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <script type="text/javascript"   > </script>
+</head>
+<body>
+    <table class="table table-hover">
+        <tr>
+            <th>   COUNTRY BASED DATA </th>
+        </tr>
+        <tr>
+            <th>Total Cases</th>
+            <th>Today's Cases</th>
+            <th>TOTAL DEATH</th>
+            <th>Today's Deaths</th>
+        </tr>
+        <tr id="individualData" >
+
+
+        </tr>
+    </table>
+    <br><br>
+
+    <form action="history.html" method="GET">
+            
+        <input  class="btn btn-success " type="submit" value="history" > 
+    </form> 
+    
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+
+var individualData=''
+individualInit()
+function individualInit(){
+
+    var c=JSON.parse(localStorage.getItem("storageName"))
+
+    var url= "https://corona.lmao.ninja/v2/countries/"+c
+   
+    
+
+    fetch(url)
+        .then((res) => res.json())
+        .then((res) =>console.log(res))
+ 
+        $.get(url,function(individualData){
+            
+            individualData=`
+            <td>${individualData.cases}</td>
+            <td>${individualData.todayCases}</td>
+            <td>${individualData.deaths}</td>
+            <td>${individualData.todayDeaths}</td>
+            `
+            $("#individualData").html(individualData)
+        })
+
+}
+
+</script>
+
+</html>

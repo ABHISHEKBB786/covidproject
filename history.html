@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>history</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
+    <script type="text/javascript"   > </script>
+</head>
+<body>
+
+
+    <table class="table table-hover">
+        <tr>
+            <th>   Historical Data of respective country </th>
+        </tr>
+        <tr>
+            <th>Total Cases</th>
+            <th>TOTAL DEATH</th>
+            <th>Recovered</th>
+            
+        </tr>
+        <tr id="history" >
+
+        </tr>
+        <br>
+        
+        
+    
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+var history=''
+historyInit()
+function historyInit(){
+
+    var cn=JSON.parse(localStorage.getItem("storageName"))
+
+    var url= "https://corona.lmao.ninja/v2/historical/"+cn
+fetch(url)
+        .then((res) => res.json())
+        .then((res) =>console.log(res))
+  
+        $.get(url,function(history){
+            
+            history=`
+            <td>${JSON.stringify(history.timeline.cases)}</td>
+            <td>${JSON.stringify(history.timeline.deaths)}</td>
+            <td>${JSON.stringify(history.timeline.recovered)}</td>
+            `
+            $("#history").html(history)
+
+        })
+    }
+
+</script>
+</html>
